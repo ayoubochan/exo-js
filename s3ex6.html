@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exercice 5</title>
+  </head>
+  <body>
+    <div class="conteneur">
+      <img src="assets/image1.jpg" id="image1" />
+      <img src="assets/image2.jpg" id="image2" />
+      <img src="assets/image3.jpg" id="image3" />
+      <img src="assets/image4.jpg" id="image4" />
+      <img src="assets/image5.jpg" id="image5" />
+    </div>
+
+    <script>
+      for (let i = 1; i < 6; i++) {
+        const image = document.getElementById(`image${i}`);
+        image.onmouseover = () => {
+          image.src = image.src.replace(`image${i}.jpg`, `image${i}_2.jpg`);
+        }
+        image.onmouseleave = () => {
+          image.src = image.src.replace(`image${i}_2.jpg`, `image${i}.jpg`);
+        }
+      }
+    </script>
+  </body>
+</html>
