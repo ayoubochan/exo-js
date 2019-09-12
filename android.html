@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <canvas height="500" width="500">
+
+  </canvas>
+
+  <script>
+    const canvas = document.getElementsByTagName('canvas')[0]
+    const ctx = canvas.getContext('2d')
+
+    ctx.beginPath()
+    ctx.moveTo(100,100)
+    ctx.lineTo(250, 100)
+    ctx.scale(1, 0.9)
+    ctx.arc(175,110,75,0,Math.PI,true)
+    ctx.strokeStyle = 'rgb(164, 202, 57)'
+    ctx.fillStyle = 'rgb(164, 202, 57)'
+    ctx.scale(1, 1)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.moveTo(140, 45)
+    ctx.lineTo(130, 15)
+    ctx.moveTo(210, 45)
+    ctx.lineTo(220, 15)
+    ctx.lineWidth = '3'
+    ctx.lineJoin = 'round'
+    ctx.lineCap = 'round'
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.arc(140,75,6,0,2 * Math.PI,true)
+    ctx.fillStyle = 'white'
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.arc(210,75,6,0,2 * Math.PI,true)
+    ctx.fillStyle = 'white'
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.moveTo(100, 145)
+    ctx.lineTo(250, 145)
+    ctx.lineJoin = 'miter'
+    ctx.lineWidth = '50'
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(225, 145)
+    ctx.lineTo(225, 240)
+    ctx.lineTo(125, 240)
+    ctx.lineTo(125, 145)
+    ctx.lineWidth = '50'
+    ctx.lineJoin = 'round'
+    ctx.fillStyle = 'rgb(164, 202, 57)'
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.moveTo(75, 130)
+    ctx.lineTo(75, 215)
+    ctx.strokeStyle = 'rgb(164, 202, 57)'
+    ctx.lineWidth = '35'
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(275, 130)
+    ctx.lineTo(275, 215)
+    ctx.lineWidth = '35'
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(205, 250)
+    ctx.lineTo(205, 310)
+    ctx.lineWidth = '35'
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(145, 250)
+    ctx.lineTo(145, 310)
+    ctx.lineWidth = '35'
+    ctx.closePath()
+    ctx.stroke()
+    
+  </script>
+</body>
+</html>
