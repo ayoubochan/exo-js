@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body style="position: relative; background-color: black; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+  <canvas style="background-color: white" height="700" width="800">
+  </canvas>
+  <button style="position: absolute; transform: translate(-50%, -50%); top: 50%; left: 50%; z-index: 10; background-color: orange; color: white; padding: 5px; border-radius: 5px; font-size: 20px; border: none; cursor: pointer;">Play</button>
+  <div style="position: absolute; transform:translate(-50%-50%); top: calc(50% - 100px); left: calc(50% - 380px);">
+    <h2>Targets</h2>
+    <p id="targets">0</p>
+  </div>
+  <div style="position: absolute; transform:translate(-50%-50%); top: 50%; left: calc(50% - 380px);">
+    <h2>Time</h2>
+    <p id="time">0</p>
+  </div>
+  
+  <script>
+    let targets = document.getElementById('targets')
+    let time = document.getElementById('time')
+    const play = document.getElementsByTagName('button')[0]
+    const canvas = document.getElementsByTagName('canvas')[0]
+    const ctx = canvas.getContext('2d')
+
+    let gunX = 400
+    let bulletY = 465
+    let targetX = Math.round((Math.random() * 6)) * 100 + 100
+    let previousTargetX = targetX
+    let start = 'off'
+
+    play.onclick = () => {
+      start = 'on'
+      play.style.display = 'none'
+      targets.textContent = '0'
+      time.textContent = '0'
+      const end = () => {
+          if (targets.textContent === '10') {
+          start = 'off'
+          play.textContent = 'Play Again'
+          play.style.display = 'initial'
+          const stopInterval = () => {clearInterval(interval)}
+          stopInterval()
+          } else {
+            time.textContent = parseInt(time.textContent) + 1
+          }
+      }
+      const interval = setInterval(end, 1000)
+    }
+    console.log(targetX)
+
+    //Debut cible
+    ctx.beginPath()
+    ctx.fillStyle = 'rgb(180, 100, 20)'
+    ctx.strokeStyle = 'rgb(200, 80, 20)'
+    ctx.lineWidth = '5'
+    ctx.save()
+    ctx.scale(1, 0.7)
+    ctx.arc(targetX,50,50,0,Math.PI,false)
+    ctx.restore()
+    ctx.moveTo(targetX - 20, 35)
+    ctx.lineTo(targetX - 20, 5)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.fillStyle = 'black'
+    ctx.lineWidth = '1'
+    ctx.moveTo(targetX - 18, 7)
+    ctx.lineTo(targetX + 30, 20)
+    ctx.lineTo(targetX - 18, 33)
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.strokeStyle = 'white'
+    ctx.fillStyle = 'rgb(40, 170, 190)'
+    ctx.lineWidth = '3'
+    ctx.arc(targetX + 15,65,10,0, Math.PI,false)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.strokeStyle = 'white'
+    ctx.fillStyle = 'rgb(40, 170, 190)'
+    ctx.lineWidth = '3'
+    ctx.arc(targetX - 5,63,15,0, Math.PI,false)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.strokeStyle = 'white'
+    ctx.fillStyle = 'rgb(40, 170, 190)'
+    ctx.lineWidth = '3'
+    ctx.arc(targetX - 30,60,20,0, Math.PI,false)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+    //Fin cible
+
+    ctx.beginPath()
+    ctx.fillStyle = 'white'
+    ctx.fillRect(gunX - 100, 500, 200, 200);
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.fillStyle = 'white'
+    ctx.fillRect(gunX - 25, bulletY - 25, 55, 55);
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.fillStyle = 'rgb(30, 30, 30)'
+    ctx.moveTo(gunX - 10, 500)
+    ctx.lineTo(gunX + 10, 500)
+    ctx.arc(gunX,670,25,0,Math.PI,false)
+    ctx.closePath()
+    ctx.fill()
+
+    ctx.beginPath()
+    ctx.fillStyle = 'white'
+    ctx.arc(gunX,bulletY,10,0,2 * Math.PI,false)
+    ctx.closePath()
+    ctx.fill()
+
+    window.onkeydown = (e) => {
+      if (start === 'on') {
+        switch (true) {
+          case e.key === 'ArrowLeft':
+            if (gunX > 40) gunX -= 10
+          break;
+          case e.key === 'ArrowRight':
+          if (gunX < 760) gunX += 10
+          break;
+          case e.key === ' ':
+            console.log('ok')
+            let r = 10
+            const fire = () => {
+              setTimeout(() => { 
+                r -= 0.3
+                bulletY -= 15
+                console.log(bulletY)
+
+                ctx.beginPath()
+                ctx.fillStyle = 'white'
+                ctx.fillRect(gunX - 50, bulletY - 25, 100, 75);
+                ctx.closePath()
+                ctx.fill()
+
+                ctx.beginPath()
+                ctx.fillStyle = 'black'
+                ctx.arc(gunX,bulletY,r,0,2 * Math.PI,false)
+                ctx.closePath()
+                ctx.fill()
+
+                if(bulletY > 50) {fire()}
+                else {
+                  let rx = 10
+                  const explosion = () => {
+                    setTimeout(() => {
+                      rx += 3
+                      ctx.beginPath()
+                      ctx.fillStyle = 'orange'
+                      ctx.arc(gunX,bulletY,rx,0,2 * Math.PI,false)
+                      ctx.closePath()
+                      ctx.fill()
+
+                      if (rx < 25) {explosion()}
+                      else {
+                        ctx.beginPath()
+                        ctx.fillStyle = 'white'
+                        ctx.fillRect(gunX - 35,0,70,80)
+                        ctx.closePath()
+                        ctx.fill()
+                        bulletY = 465
+                      }
+                    }, 30)
+                  }
+                  explosion()
+                  setTimeout(() => {
+                    if(targetX > gunX - 70 && targetX < gunX + 70) {
+                      ctx.beginPath()
+                      ctx.fillStyle = 'white'
+                      ctx.fillRect(targetX - 60,0,140,80)
+                      ctx.closePath()
+                      ctx.fill()
+
+                      targets.textContent = parseInt(targets.textContent) + 1
+
+                      const repop = () => {
+                        targetX = Math.round((Math.random() * 6)) * 100 + 100
+                        if (targetX === previousTargetX) {
+                          repop()
+                        }
+                      }
+                      repop()
+
+                      previousTargetX = targetX
+
+                      //Debut cible
+                      ctx.beginPath()
+                      ctx.fillStyle = 'rgb(180, 100, 20)'
+                      ctx.strokeStyle = 'rgb(200, 80, 20)'
+                      ctx.lineWidth = '5'
+                      ctx.save()
+                      ctx.scale(1, 0.7)
+                      ctx.arc(targetX,50,50,0,Math.PI,false)
+                      ctx.restore()
+                      ctx.moveTo(targetX - 20, 35)
+                      ctx.lineTo(targetX - 20, 5)
+                      ctx.closePath()
+                      ctx.stroke()
+                      ctx.fill()
+
+                      ctx.beginPath()
+                      ctx.fillStyle = 'black'
+                      ctx.lineWidth = '1'
+                      ctx.moveTo(targetX - 18, 7)
+                      ctx.lineTo(targetX + 30, 20)
+                      ctx.lineTo(targetX - 18, 33)
+                      ctx.closePath()
+                      ctx.fill()
+
+                      ctx.beginPath()
+                      ctx.strokeStyle = 'white'
+                      ctx.fillStyle = 'rgb(40, 170, 190)'
+                      ctx.lineWidth = '3'
+                      ctx.arc(targetX + 15,65,10,0, Math.PI,false)
+                      ctx.closePath()
+                      ctx.stroke()
+                      ctx.fill()
+
+                      ctx.beginPath()
+                      ctx.strokeStyle = 'white'
+                      ctx.fillStyle = 'rgb(40, 170, 190)'
+                      ctx.lineWidth = '3'
+                      ctx.arc(targetX - 5,63,15,0, Math.PI,false)
+                      ctx.closePath()
+                      ctx.stroke()
+                      ctx.fill()
+
+                      ctx.beginPath()
+                      ctx.strokeStyle = 'white'
+                      ctx.fillStyle = 'rgb(40, 170, 190)'
+                      ctx.lineWidth = '3'
+                      ctx.arc(targetX - 30,60,20,0, Math.PI,false)
+                      ctx.closePath()
+                      ctx.stroke()
+                      ctx.fill()
+                      //Fin cible
+                    }
+                  }, 1)
+                }
+              }, 10)
+            }
+            fire()
+        }
+      }
+
+      ctx.beginPath()
+      ctx.fillStyle = 'white'
+      ctx.fillRect(gunX - 100, 500, 200, 200);
+      ctx.closePath()
+      ctx.fill()
+
+      ctx.beginPath()
+      ctx.fillStyle = 'rgb(30, 30, 30)'
+      ctx.moveTo(gunX - 10, 500)
+      ctx.lineTo(gunX + 10, 500)
+      ctx.arc(gunX,670,25,0,Math.PI,false)
+      ctx.closePath()
+      ctx.fill()
+
+      ctx.beginPath()
+      ctx.fillStyle = 'white'
+      ctx.arc(gunX,bulletY - 15,45,0,2 * Math.PI,false)
+      ctx.closePath()
+      ctx.fill()
+    }
+  </script>
+</body>
+</html>
