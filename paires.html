@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    img {
+      height: 300px;
+      width: 200px;
+    }
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+  <img src="assets/card.png" alt="">
+
+  <script>
+    const launch = () => {
+      let count = 0
+    let comparator = []
+    const generator = [{random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false},
+    {random: Math.random(), position: false}
+    ]
+
+    const randoms = []
+
+    const cards = ['magician.png', 'magician.png', 'serpent.png', 'serpent.png', 'dragon.jpg', 'dragon.jpg', 'exodia.jpg', 'exodia.jpg']
+  
+    for (let i = 0; i < cards.length; i++) {
+      document.getElementsByTagName('img')[i].onclick = () => show(i)
+      randoms.push(generator[i].random)
+    }
+
+    randoms.sort()
+
+    const show = (i) => {
+      if (generator[i].position === false) {
+        document.getElementsByTagName('img')[i].src = `assets/${cards[randoms.indexOf(generator[i].random)]}`
+        generator[i].position === true
+        comparator.push({image: cards[randoms.indexOf(generator[i].random)], index: i})
+        if (comparator.length === 2) {
+          if (comparator[0].image !== comparator[1].image) {
+            setTimeout(() => {
+              document.getElementsByTagName('img')[comparator[0].index].src = 'assets/card.png'
+              document.getElementsByTagName('img')[comparator[1].index].src = 'assets/card.png'
+              comparator = []
+            }, 200)
+          } else {
+            comparator = []
+            count += 1
+            if (count === 4) {
+              setTimeout(() => {
+                const confirmation = confirm('Vous avez gagné')
+                hide()
+              }, 220)
+            }
+          }
+        }
+      }
+
+    }
+
+    const hide = () => {
+      for (let i = 0; i < cards.length; i++) {
+        document.getElementsByTagName('img')[i].src = 'assets/card.png'
+      }
+      launch()
+    }
+    }
+    launch()
+  </script>
+</body>
+</html>
