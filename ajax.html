@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <img style="height: 200px;" src="">
+  <p id="quote"><br/><b></b></p>
+
+  <script>
+    quote = document.getElementById('quote')
+    image = document.getElementsByTagName('img')[0]
+
+    let request = new XMLHttpRequest;
+    request.open('GET', 'https://thatsthespir.it/api', true)
+    request.onload = () => {
+      if (request.status === 200) {
+        console.log('Success');
+        showContent(JSON.parse(request.responseText))
+      } else {
+        console.log('Error')
+      }
+    }
+    request.send();
+
+    const showContent = (data) => {
+      quote.textContent = data.quote
+      image.src = data.photo
+    }
+  </script>
+</body>
+</html>
