@@ -34,21 +34,14 @@
     const launch = () => {
       let count = 0
     let comparator = []
-    const generator = [{random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false},
-    {random: Math.random(), position: false}
-    ]
+    const generator = []
 
     const randoms = []
 
     const cards = ['magician.png', 'magician.png', 'serpent.png', 'serpent.png', 'dragon.jpg', 'dragon.jpg', 'exodia.jpg', 'exodia.jpg']
   
     for (let i = 0; i < cards.length; i++) {
+      generator.push({random: Math.random(), position: false})
       document.getElementsByTagName('img')[i].onclick = () => show(i)
       randoms.push(generator[i].random)
     }
